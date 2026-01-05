@@ -17,6 +17,9 @@ importers:
       openai:
         specifier: ^6.15.0
         version: 6.15.0(zod@4.3.5)
+      zod:
+        specifier: ^4.3.5
+        version: 4.3.5
     devDependencies:
       '@biomejs/biome':
         specifier: 2.3.11

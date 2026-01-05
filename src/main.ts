@@ -1,10 +1,4 @@
-import { generateText } from "ai";
-import { ollama } from "ollama-ai-provider-v2";
+import { agent } from "./agent.ts";
 
-const res = await generateText({
-  model: ollama("qwen3:4b-instruct-2507-q4_K_M"),
-  prompt: "hello",
-});
-
-console.log(res);
-console.log(res.text);
+const { text } = await agent.generate({ prompt: "when is now?" });
+console.log(text);
