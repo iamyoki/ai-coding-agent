@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "commit": "committier commit"
+    "commit": "committier commit",
+    "start": "tsx src/main.ts",
+    "dev": "tsx --watch src/main.ts"
   },
   "keywords": [],
   "author": "",
