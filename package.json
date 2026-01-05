@@ -20,5 +20,10 @@
     "lefthook": "^2.0.13",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "ai": "^6.0.7",
+    "ollama-ai-provider-v2": "^2.0.0",
+    "openai": "^6.15.0"
   }
 }

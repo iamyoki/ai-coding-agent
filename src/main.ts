@@ -1,25 +1,10 @@
-// curl http://localhost:11434/api/generate -d '{
-//   "model": "gemma3",
-//   "prompt": "Why is the sky blue?"
-// }'
+import { generateText } from "ai";
+import { ollama } from "ollama-ai-provider-v2";
 
-const res = await fetch("http://localhost:11434/api/generate", {
-  method: "post",
-  body: JSON.stringify({
-    model: "qwen3:4b-instruct-2507-q4_K_M",
-    prompt: "why is the sky blue?",
-    // stream: false,
-  }),
+const res = await generateText({
+  model: ollama("qwen3:4b-instruct-2507-q4_K_M"),
+  prompt: "hello",
 });
 
-if (!res.body) process.exit(0);
-
-const decoderStream = new TextDecoderStream();
-
-const stream = res.body.pipeThrough(decoderStream);
-
-for await (const chunk of stream) {
-  const json = JSON.parse(chunk);
-  process.stdout.write(json.response);
-}
-process.stdout.write("\n");
+console.log(res);
+console.log(res.text);
