@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "ai": "^6.0.7",
+    "globby": "^16.1.0",
     "ollama-ai-provider-v2": "^2.0.0",
     "openai": "^6.15.0",
     "zod": "^4.3.5"
