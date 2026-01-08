@@ -1,54 +1,101 @@
 # AI Coding Agent
 
-## Overview
-This project is an AI-powered coding agent designed to assist developers with various tasks. It leverages modern tools and frameworks to provide a seamless development experience.
+A modular, TypeScript-based AI agent designed to assist with coding tasks using AI-powered tools.
 
-## Key Features
-- **Modular Architecture**: The agent is structured with clear separation of concerns, making it easy to maintain and extend.
-- **Tool Integration**: Built-in tools for system operations such as date-time retrieval, file listing, reading, and writing.
-- **Development Workflow**: Supports development, testing, and running of applications using TypeScript and Node.js.
-- **AI Model Integration**: Uses AI models like OpenAI and Ollama to assist with code generation and analysis.
+## Features
+
+- Intelligent code generation using AI models (OpenAI, Ollama).
+- Modular architecture with clear separation of concerns.
+- Supports development, testing, and automated commits.
+- Built with modern tooling: TypeScript, TSX, Biome, and LeftHook.
 
 ## Technologies Used
-- **Language**: TypeScript
-- **Build Tools**: PNPM, TypeScript, Biome
-- **AI Libraries**: OpenAI, Ollama-ai-provider-v2, Zod
-- **Testing**: LeFthook, Jest
 
-## Package Details
-- **Main Entry Point**: `src/main.ts`
-- **Scripts**: 
-  - `start`: Runs the application with `tsx src/main.ts`
-  - `dev`: Starts development mode with live reload (`tsx --watch src/main.ts`)
-  - `test`: Runs tests with `tsx --test`
-  - `commit`: Automates commits using `committier commit`
+- **Languages**: TypeScript
+- **Frameworks**: TSX, TypeScript
+- **AI Libraries**: `ai`, `openai`, `ollama-ai-provider-v2`
+- **Tooling**: Biome (code formatting), LeftHook (commit hooks)
 
-## Dependencies
-- `ai`: Version 6.0.7
-- `globby`: Version 16.1.0
-- `ollama-ai-provider-v2`: Version 2.0.0
-- `openai`: Version 6.15.0
-- `zod`: Version 4.3.5
+## Setup and Usage
 
-## Development Environment
-- **Node.js**: Version 25+ (via `@types/node`)
-- **TypeScript**: Version 5.9.3
-- **Biome**: Version 2.3.11
+### Prerequisites
 
-## File Structure
-- `src/`: Contains source code including agent logic and tools.
-- `evals/`: Contains unit tests for individual tools.
-- `src/tools/`: Implements tool functionality for file operations and system interactions.
-- Configuration files like `package.json`, `tsconfig.json`, and `pnpm-workspace.yaml` manage dependencies and build settings.
+- Node.js (v18+)
+- pnpm (v7+)
 
-## How to Use
-1. Clone the repository.
-2. Install dependencies with `pnpm install`.
-3. Start the application with `pnpm run start`.
-4. For development, use `pnpm run dev`.
-5. Run tests with `pnpm run test`.
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/ai-coding-agent.git
+   cd ai-coding-agent
+   ```
+
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+
+### Running the Application
+
+- **Development Mode**:
+  ```bash
+  pnpm run dev
+  ```
+  Starts the application in watch mode for real-time development.
+
+- **Start Application**:
+  ```bash
+  pnpm run start
+  ```
+  Runs the application in production mode.
+
+- **Run Tests**:
+  ```bash
+  pnpm run test
+  ```
+  Executes unit tests for all tools.
+
+- **Automated Commit**:
+  ```bash
+  pnpm run commit
+  ```
+  Uses `committier` to automate commit messages.
+
+### Testing Tools
+
+The project includes test cases for individual tools:
+- `read-file.test.ts`
+- `write-file.test.ts`
+- `list-files.test.ts`
+
+These ensure each tool functions correctly.
+
+## Directory Structure
+
+```
+src/
+├── agent.ts
+├── main.ts
+├── models.ts
+├── tools/
+│   ├── get-system-date-time.tool.ts
+│   ├── list-files.tool.ts
+│   ├── read-file.tool.ts
+│   └── write-file.tool.ts
+└── index.ts
+evals/
+├── one-turn-tools/
+│   ├── get-system-date-time.test.ts
+│   ├── list-files.test.ts
+│   ├── read-file.test.ts
+│   └── write-file.test.ts
+```
+
+## Contributing
+
+Contributions are welcome! Please submit a pull request with clear documentation and test cases.
 
 ## License
-ISC
 
-This project is open-source and available under the ISC license.
+This project is licensed under the ISC License.
