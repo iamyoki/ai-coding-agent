@@ -1,24 +1,27 @@
-import { createInterface } from "node:readline/promises";
-import type { ModelMessage } from "ai";
-import { agent } from "./agent.ts";
+import { render } from "ink";
+import { createElement } from "react";
+import { App } from "./ui/app.tsx";
 
-const history: ModelMessage[] = [];
+// const history: ModelMessage[] = [];
 
-const rl = createInterface(process.stdin, process.stdout);
+// const rl = createInterface(process.stdin, process.stdout);
 
-while (true) {
-  const ask = await rl.question("Ask: ");
-  if (!ask.trim()) break;
+// while (true) {
+//   const ask = await rl.question("Ask: ");
+//   if (!ask.trim()) break;
 
-  const userMessage: ModelMessage = { role: "user", content: ask };
+//   const userMessage: ModelMessage = { role: "user", content: ask };
 
-  const { text, response } = await agent.generate({
-    messages: [...history, userMessage],
-  });
+//   const { text, response } = await agent.generate({
+//     messages: [...history, userMessage],
+//   });
 
-  console.log(text);
-  history.push(userMessage);
-  history.push(...response.messages);
-}
+//   console.log(text);
+//   // Add the user message to the history array
+//   history.push(userMessage);
+//   history.push(...response.messages);
+// }
 
-rl.close();
+// rl.close();
+
+render(createElement(App));
