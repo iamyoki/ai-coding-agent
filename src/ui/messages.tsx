@@ -1,22 +1,64 @@
 import { Badge, Spinner } from "@inkjs/ui";
+import type { UIMessage } from "ai";
 import { Box, Text } from "ink";
+import { useSnapshot } from "valtio";
+import { uiStore } from "./ui.store.ts";
 
-function UserMessage({ children }: { children: string }) {
+function UserMessage({ message }: { message: UIMessage }) {
   return (
     <Box justifyContent="flex-end">
       <Box borderStyle={"round"} borderDimColor gap={2} paddingX={1}>
-        <Text dimColor>{children}</Text>
+        <Text dimColor>
+          {message.parts
+            .filter((p) => p.type === "text")
+            .map((p) => p.text)
+            .join("")}
+        </Text>
         <Badge color={"redBright"}>ME</Badge>
       </Box>
     </Box>
   );
 }
 
-function AIMessage({ children }: { children: string }) {
+function AIMessage({ message }: { message: UIMessage }) {
   return (
     <Box gap={2} paddingX={1} width={"80%"}>
       <Badge color={"blueBright"}>AI</Badge>
-      <Text>{children}</Text>
+      <Box flexDirection="column" gap={1}>
+        {message.parts
+          .map((p, index) => {
+            if (p.type === "text" && p.text.trim()) {
+              const isStreaming = p.state === "streaming";
+              return (
+                <Text key={index.toString()} dimColor={isStreaming}>
+                  {p.text}
+                </Text>
+              );
+            }
+
+            if ("toolCallId" in p)
+              return (
+                <Text key={index.toString()}>
+                  <Text backgroundColor={"yellowBright"}>
+                    {p.type}({JSON.stringify(p.input ?? "{}")})
+                  </Text>
+                  <Text color={"yellowBright"} dimColor>
+                    {" => "}
+                  </Text>
+                  <Text color={"yellowBright"} dimColor>
+                    {p.output as string}
+                  </Text>
+                </Text>
+              );
+            return null;
+          })
+          .filter(Boolean)}
+
+        {/* {message.parts
+          .filter((p) => p.type === "text")
+          .map((p) => p.text)
+          .join("")} */}
+      </Box>
     </Box>
   );
 }
@@ -30,16 +72,20 @@ function Thinking() {
 }
 
 export function Messages() {
+  const snap = useSnapshot(uiStore);
+  const messages = snap.messages as unknown as UIMessage[];
+
   return (
     <Box flexDirection="column" flexGrow={1} gap={2}>
-      <UserMessage>When is now?</UserMessage>
-      <AIMessage>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga sit
-        molestias tempore id quis quas, aliquid et, rem blanditiis ullam ipsam
-        mollitia quos nam accusantium voluptatum tempora magnam. Temporibus,
-        beatae.
-      </AIMessage>
-      <Thinking />
+      {messages.map((message) =>
+        message.role === "user" ? (
+          <UserMessage key={message.id} message={message} />
+        ) : message.role === "assistant" ? (
+          <AIMessage key={message.id} message={message} />
+        ) : null,
+      )}
+
+      {snap.isThinking && <Thinking />}
     </Box>
   );
 }

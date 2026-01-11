@@ -33,6 +33,7 @@
     "ollama-ai-provider-v2": "^2.0.0",
     "openai": "^6.15.0",
     "react": "^19.2.3",
+    "valtio": "^2.3.0",
     "zod": "^4.3.5"
   }
 }
