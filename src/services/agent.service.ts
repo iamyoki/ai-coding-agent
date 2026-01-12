@@ -1,5 +1,6 @@
 import type { ModelMessage } from "ai";
 import { agent } from "../agent.ts";
+import { uiStore } from "../ui/ui.store.ts";
 
 class AgentService {
   private abortController?: AbortController;
@@ -15,6 +16,24 @@ class AgentService {
 
   abort(reason: string) {
     this.abortController?.abort(reason);
+  }
+
+  async requestTool({
+    toolName,
+    arsg,
+    reason,
+  }: {
+    toolName: string;
+    arsg?: string;
+    reason?: string;
+  }): Promise<boolean> {
+    try {
+      return await new Promise<boolean>((res) => {
+        uiStore.approval = { toolName, arsg, reason, resolve: res };
+      });
+    } finally {
+      uiStore.approval = undefined;
+    }
   }
 }
 
