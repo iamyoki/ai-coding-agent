@@ -1,101 +1,126 @@
 # AI Coding Agent
 
-A modular, TypeScript-based AI agent designed to assist with coding tasks using AI-powered tools.
+A terminal-based AI coding agent built with TypeScript, React (Ink), and the AI SDK. This agent leverages large language models to assist with file operations and system tasks through an interactive command-line interface.
 
 ## Features
 
-- Intelligent code generation using AI models (OpenAI, Ollama).
-- Modular architecture with clear separation of concerns.
-- Supports development, testing, and automated commits.
-- Built with modern tooling: TypeScript, TSX, Biome, and LeftHook.
+- 🤖 **Multi-Model Support**: Compatible with Ollama and Zhipu AI models
+- 📁 **File System Tools**: Read, write, and list files/directories
+- ⏰ **System Time Access**: Get current system date and time
+- 🎨 **Beautiful Terminal UI**: Rich interface built with Ink React framework
+- 🔒 **User Approval Flow**: Approve or reject tool executions for safety
+- 📊 **Real-time Streaming**: Watch AI responses as they're generated
+- ✅ **Evaluation Suite**: Automated tests for tool capabilities
 
-## Technologies Used
-
-- **Languages**: TypeScript
-- **Frameworks**: TSX, TypeScript
-- **AI Libraries**: `ai`, `openai`, `ollama-ai-provider-v2`
-- **Tooling**: Biome (code formatting), LeftHook (commit hooks)
-
-## Setup and Usage
-
-### Prerequisites
-
-- Node.js (v18+)
-- pnpm (v7+)
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/ai-coding-agent.git
-   cd ai-coding-agent
-   ```
-
-2. Install dependencies:
-   ```bash
-   pnpm install
-   ```
-
-### Running the Application
-
-- **Development Mode**:
-  ```bash
-  pnpm run dev
-  ```
-  Starts the application in watch mode for real-time development.
-
-- **Start Application**:
-  ```bash
-  pnpm run start
-  ```
-  Runs the application in production mode.
-
-- **Run Tests**:
-  ```bash
-  pnpm run test
-  ```
-  Executes unit tests for all tools.
-
-- **Automated Commit**:
-  ```bash
-  pnpm run commit
-  ```
-  Uses `committier` to automate commit messages.
-
-### Testing Tools
-
-The project includes test cases for individual tools:
-- `read-file.test.ts`
-- `write-file.test.ts`
-- `list-files.test.ts`
-
-These ensure each tool functions correctly.
-
-## Directory Structure
+## Architecture
 
 ```
 src/
-├── agent.ts
-├── main.ts
-├── models.ts
+├── agent.ts              # Agent configuration with ToolLoopAgent
+├── main.ts               # Application entry point
+├── models.ts             # LLM provider configurations
+├── services/
+│   └── agent.service.ts  # Agent service for streaming and approvals
 ├── tools/
 │   ├── get-system-date-time.tool.ts
 │   ├── list-files.tool.ts
 │   ├── read-file.tool.ts
 │   └── write-file.tool.ts
-└── index.ts
-evals/
-├── one-turn-tools/
-│   ├── get-system-date-time.test.ts
-│   ├── list-files.test.ts
-│   ├── read-file.test.ts
-│   └── write-file.test.ts
+└── ui/
+    ├── app.tsx           # Main UI component
+    ├── approval.tsx      # Tool approval interface
+    ├── hero.tsx          # Header/branding
+    ├── messages.tsx      # Message display
+    └── ...               # Other UI components
 ```
 
-## Contributing
+## Available Tools
 
-Contributions are welcome! Please submit a pull request with clear documentation and test cases.
+| Tool Name | Description | Parameters |
+|-----------|-------------|------------|
+| `get_system_date_time` | Get current system date and time | None |
+| `read_file` | Read file contents | `path` (required), `reason` (optional) |
+| `write_file` | Write content to file | `path` (required), `content` (required), `reason` (optional) |
+| `list_files` | List directory contents | `directory` (required), `reason` (optional) |
+
+## Installation
+
+```bash
+# Install dependencies
+pnpm install
+
+# Set up environment variables
+cp .env.example .env
+```
+
+## Configuration
+
+Configure your preferred AI model in `.env`:
+
+```env
+# For Zhipu AI
+ZHIPU_APIKEY=your_api_key_here
+
+# For Ollama (ensure Ollama is running locally)
+# No additional configuration needed
+```
+
+Switch between models in `src/agent.ts`:
+
+```typescript
+export const agent = new ToolLoopAgent({
+  model: zhipuGLMModel,  // Use Zhipu GLM-4.7
+  // model: ollamaQwen3_4b_instruct_q4_KM,  // Or use Ollama
+  // ...
+});
+```
+
+## Usage
+
+```bash
+# Start the application
+pnpm start
+
+# Development mode with hot reload
+pnpm dev
+```
+
+Once running:
+1. Type your request or question
+2. The agent will use available tools as needed
+3. Approve or reject tool executions when prompted
+4. View results in real-time with markdown formatting
+
+## Testing
+
+Run the evaluation suite to test tool capabilities:
+
+```bash
+# Run all tests
+pnpm test
+
+# Run specific test files
+pnpm test evals/one-turn-tools/get-system-date-time.test.ts
+pnpm test evals/one-turn-tools/list-files.test.ts
+pnpm test evals/one-turn-tools/read-file.test.ts
+pnpm test evals/one-turn-tools/write-file.test.ts
+```
+
+## Tech Stack
+
+- **Runtime**: Node.js with TypeScript
+- **AI/ML**: AI SDK, OpenAI, Ollama
+- **UI**: Ink (React for CLI), Ink UI components
+- **State Management**: Valtio
+- **Utilities**: Zod (validation), dedent, marked (markdown)
+- **Tooling**: pnpm, Biome, Lefthook
+
+## Development
+
+- Code formatting with Biome
+- Git hooks managed by Lefthook
+- Conventional commits with Committier
 
 ## License
 
-This project is licensed under the ISC License.
+ISC

@@ -3,6 +3,7 @@ import type { UIMessage } from "ai";
 import { Box, Text } from "ink";
 import { useSnapshot } from "valtio";
 import { Approval } from "./approval.tsx";
+import { Markdown } from "./markdown.tsx";
 import { uiStore } from "./ui.store.ts";
 
 function UserMessage({ message }: { message: UIMessage }) {
@@ -31,9 +32,9 @@ function AIMessage({ message }: { message: UIMessage }) {
             if (p.type === "text" && p.text.trim()) {
               const isStreaming = p.state === "streaming";
               return (
-                <Text key={index.toString()} dimColor={isStreaming}>
+                <Markdown key={index.toString()} isStreaming={isStreaming}>
                   {p.text}
-                </Text>
+                </Markdown>
               );
             }
 

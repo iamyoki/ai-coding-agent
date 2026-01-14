@@ -4,6 +4,7 @@ import { useSyncExternalStore } from "react";
 import { useSnapshot } from "valtio";
 import { Approval } from "./approval.tsx";
 import { Hero } from "./hero.tsx";
+import { Markdown } from "./markdown.tsx";
 import { Messages } from "./messages.tsx";
 import { uiStore } from "./ui.store.ts";
 import { Usage } from "./usage.tsx";
