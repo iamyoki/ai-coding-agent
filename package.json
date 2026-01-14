@@ -5,13 +5,14 @@
   "main": "dist/main.js",
   "type": "module",
   "bin": "dist/main.js",
+  "files": ["dist"],
   "scripts": {
     "commit": "committier commit",
     "start": "tsx src/main.ts",
     "dev": "tsx --watch src/main.ts",
     "test": "tsx --test",
     "build": "tsc -b tsconfig.build.json",
-    "prepare": "tsc -b tsconfig.build.json"
+    "prepare": "npx -y tsc -b tsconfig.build.json"
   },
   "keywords": [],
   "author": "",
