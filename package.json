@@ -2,13 +2,18 @@
   "name": "ai-coding-agent",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/main.js",
+  "bin": "dist/main.js",
   "type": "module",
   "scripts": {
     "commit": "committier commit",
-    "start": "tsx src/main.ts",
+    "start": "node dist/main.js",
     "dev": "tsx --watch src/main.ts",
-    "test": "tsx --test"
+    "test": "tsx --test",
+    "build": "tsc -b tsconfig.build.json",
+    "typecheck": "tsc -b",
+    "check": "biome check --write",
+    "prepare": "tsc -b tsconfig.build.json"
   },
   "keywords": [],
   "author": "",

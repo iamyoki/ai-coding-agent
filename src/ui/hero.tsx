@@ -1,4 +1,4 @@
-import { Box, Text } from "ink";
+import { Box } from "ink";
 import BigText from "ink-big-text";
 import Gradient from "ink-gradient";
 
